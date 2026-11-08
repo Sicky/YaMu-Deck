@@ -1,0 +1,18 @@
+name: Check Linux diagnostic launchers
+on:
+  push:
+    paths:
+      - 'scripts/*.sh'
+      - 'test/launcher.test.cjs'
+      - '.github/workflows/launchers.yml'
+  workflow_dispatch:
+jobs:
+  launchers:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: sh -n scripts/start-yamu.sh scripts/start-yamu-gamemode.sh scripts/diagnose-yamu-gamemode.sh
+      - run: node --test test/launcher.test.cjs
