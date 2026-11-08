@@ -12,7 +12,7 @@
     "test:ui": "electron scripts/smoke.cjs",
     "test:features": "electron scripts/features-smoke.cjs",
     "test:mpris": "node scripts/mpris-integration.cjs",
-    "dist:linux": "electron-builder --linux AppImage --x64 --publish never",
+    "dist:linux": "electron-builder --linux --x64 --publish never",
     "dist:win": "electron-builder --win portable --x64 --publish never"
   },
   "devDependencies": {
