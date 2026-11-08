@@ -6,12 +6,13 @@ const {launchSettings,createCredentialStore} = require('./startup.cjs');
 const launch = launchSettings();
 if(launch.ozone)app.commandLine.appendSwitch('ozone-platform',launch.ozone);
 if(launch.software)app.disableHardwareAcceleration();
+if(launch.inProcessGpu)app.commandLine.appendSwitch('in-process-gpu');
 const credentials = createCredentialStore(safeStorage);
 const diagnosticPath=()=>path.join(app.getPath('userData'),'startup.log');
 function diagnostic(event,data={}){try{syncFs.mkdirSync(app.getPath('userData'),{recursive:true,mode:0o700});syncFs.appendFileSync(diagnosticPath(),JSON.stringify({time:new Date().toISOString(),event,...data})+'\n',{mode:0o600});}catch{}}
 // Fixed stages/codes only: no errors, arguments, URLs, environment dumps or tokens.
 try{syncFs.writeFileSync(diagnosticPath(),'',{mode:0o600});}catch{}
-diagnostic('main-start',{version:app.getVersion(),platform:process.platform,electron:process.versions.electron,gaming:launch.gaming,ozone:launch.ozone||'auto',software:launch.software});
+diagnostic('main-start',{version:app.getVersion(),platform:process.platform,electron:process.versions.electron,gaming:launch.gaming,ozone:launch.ozone||'auto',software:launch.software,inProcessGpu:launch.inProcessGpu});
 const { MusicAPI, publicMessage, PublicError } = require('./api.cjs');
 const api = new MusicAPI();
 const {createMpris} = require('./mpris.cjs');

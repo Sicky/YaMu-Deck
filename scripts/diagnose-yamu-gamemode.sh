@@ -6,7 +6,7 @@ yamu_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd) || exit 1
 yamu_state="${XDG_STATE_HOME:-$HOME/.local/state}/yamu"
 mkdir -p "$yamu_state" || exit 1
 yamu_log="$yamu_state/gamemode-diagnostic.log"
-printf '%s diagnostic-v1-start\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > "$yamu_log"
+printf '%s diagnostic-v2-start\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > "$yamu_log"
 for yamu_name in DISPLAY WAYLAND_DISPLAY LD_PRELOAD LD_LIBRARY_PATH ELECTRON_RUN_AS_NODE; do
   case "$yamu_name" in
     DISPLAY) yamu_value=${DISPLAY:-} ;;
@@ -62,8 +62,8 @@ awk '
   }
 ' < "$yamu_fifo" >> "$yamu_log" &
 yamu_filter=$!
-printf 'native-flags=x11,disable-gpu,fullscreen; sandbox=enabled\n' >> "$yamu_log"
-"$yamu_dir/yamu" --steam-deck --ozone-platform=x11 --disable-gpu --fullscreen "$@" > "$yamu_fifo" 2>&1 &
+printf 'native-flags=x11,disable-gpu,in-process-gpu,fullscreen; renderer-sandbox=enabled; gpu-isolation=in-process\n' >> "$yamu_log"
+"$yamu_dir/yamu" --steam-deck --ozone-platform=x11 --disable-gpu --in-process-gpu --fullscreen "$@" > "$yamu_fifo" 2>&1 &
 yamu_pid=$!
 (
   sleep 8

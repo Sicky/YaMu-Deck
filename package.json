@@ -1,6 +1,6 @@
 {
   "name": "yamu-deck",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Yandex Music client for Steam Deck",
   "main": "electron/main.cjs",
   "author": "Yamu",
@@ -36,6 +36,10 @@
         {
           "from": "scripts/start-yamu-gamemode.sh",
           "to": "start-yamu-gamemode.sh"
+        },
+        {
+          "from": "scripts/diagnose-yamu-gamemode.sh",
+          "to": "diagnose-yamu-gamemode.sh"
         }
       ],
       "target": [

@@ -2,7 +2,7 @@
 
 [English](README.en.md) · [Русский](README.md)
 
-[Download the latest build](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.3)
+[Download the latest build](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.4)
 
 **Yandex Music on Steam Deck — with My Wave, gamepad controls, and selectable audio quality.**
 
@@ -23,23 +23,23 @@ An unofficial desktop client for SteamOS / Linux x86_64 and Windows. Its minimal
 
 ## Project status
 
-The current version is **0.3.3**, an early release under active development. The interface and playback workflows have been tested on Windows; API tests use a simulated service. Linux archives and Windows portable builds have been prepared. A GitHub Actions workflow is configured to build an AppImage on Linux.
+The current version is **0.3.4**, an early release under active development. **A user confirmed successful Gaming Mode startup on Steam Deck OLED** after the GPU process launch fix. Yandex Music sign-in and playback had previously been confirmed on the same device in Desktop Mode. Linux archives and AppImages are built in Linux CI; a Windows portable build is also available.
 
-**Full compatibility with a physical Steam Deck has not yet been verified.** Gaming Mode, SteamOS credential storage, and integration with current Steam/Decky versions still require testing on the device. This project is not Valve-certified and is not affiliated with Yandex.
+The OLED startup result does not verify every feature or every Deck model. SteamOS credential storage and Steam/Decky integration still need separate testing. This project is not Valve-certified and is not affiliated with Yandex.
 
 The current application interface is in Russian. This file provides English documentation, not an English UI localization. Screenshots and some linked technical documents are also in Russian.
 
 ## Installation
 
-If Desktop Mode works but Gaming Mode crashes or hangs, use `start-yamu-gamemode.sh` from the new build as your Steam shortcut target. It enables X11 and software rendering while keeping the Electron sandbox. Credential storage operations are asynchronous and time-limited. See the [compatibility and diagnostics guide](docs/gaming-mode-startup.md) (Russian). Use the regular `start-yamu.sh` for Desktop Mode.
+If Desktop Mode works but Gaming Mode crashes or hangs, use `start-yamu-gamemode.sh` from the new build as your Steam shortcut target. It enables X11, software rendering and an in-process GPU service. The renderer remains sandboxed, while the GPU service loses its separate process isolation. Credential storage operations are asynchronous and time-limited. See the [compatibility and diagnostics guide](docs/gaming-mode-startup.md) (Russian). Use the regular `start-yamu.sh` for Desktop Mode.
 
-Builds are available in [GitHub Releases](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.3). The `dist/` directory is excluded from Git.
+Builds are available in [GitHub Releases](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.4). The `dist/` directory is excluded from Git.
 
 | Platform | File |
 |---|---|
-| Steam Deck / Linux x86_64 | `yamu-deck-0.3.3.tar.gz` |
-| Windows x64, portable | `Yamu.0.3.3.exe` |
-| Steam Deck / Linux x86_64, AppImage | `Yamu-0.3.3.AppImage` |
+| Steam Deck / Linux x86_64 | `yamu-deck-0.3.4.tar.gz` |
+| Windows x64, portable | `Yamu.0.3.4.exe` |
+| Steam Deck / Linux x86_64, AppImage | `Yamu-0.3.4.AppImage` |
 
 ### Steam Deck
 
@@ -47,18 +47,18 @@ Builds are available in [GitHub Releases](https://github.com/Sicky/YaMu-Deck/rel
 2. Open a terminal in the extracted directory containing `start-yamu.sh`:
 
    ```sh
-   chmod +x start-yamu.sh
+   chmod +x start-yamu.sh start-yamu-gamemode.sh
    ./start-yamu.sh --fullscreen
    ```
 
 3. Request a sign-in code in the app and confirm it at `https://oauth.yandex.ru/device` on your phone or in a browser.
-4. Add `start-yamu.sh` to Steam as a non-Steam game. Set the working directory to the script's directory and add `--fullscreen` to the launch options.
+4. Add `start-yamu-gamemode.sh` to Steam as a non-Steam game. Set the working directory to the script's directory. For AppImage, use `--steam-deck --fullscreen` as launch options.
 5. Select the Steam Input **Gamepad** layout. **Do not enable Proton:** use the Linux build.
 6. Launch Yamu from Gaming Mode. To keep listening in the background, switch to your game through the Steam menu while leaving Yamu running.
 
 ### Windows
 
-Run `Yamu.0.3.3.exe`. No installation is required. Settings and the encrypted session are stored in the Electron user profile. The build is not currently digitally signed.
+Run `Yamu.0.3.4.exe`. No installation is required. Settings and the encrypted session are stored in the Electron user profile. The build is not currently digitally signed.
 
 ### Steam Deck Quick Access Menu
 

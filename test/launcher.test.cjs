@@ -10,9 +10,9 @@ test('diagnostic launcher forwards early flags, reports native failure, and scru
     const argsFile=path.join(dir,'arguments.txt');
     const result=spawnSync('sh',[script],{encoding:'utf8',timeout:15000,env:{...process.env,XDG_STATE_HOME:path.join(dir,'state'),YAMU_TEST_ARGS:argsFile,ELECTRON_RUN_AS_NODE:'1'}});
     assert.equal(result.status,42,result.stderr);
-    const args=await fs.readFile(argsFile,'utf8');for(const flag of ['--steam-deck','--ozone-platform=x11','--disable-gpu','--fullscreen'])assert.ok(args.includes(flag));assert.ok(!args.includes('--no-sandbox'));
+    const args=await fs.readFile(argsFile,'utf8');for(const flag of ['--steam-deck','--ozone-platform=x11','--disable-gpu','--in-process-gpu','--fullscreen'])assert.ok(args.includes(flag));for(const flag of ['--no-sandbox','--disable-gpu-sandbox','--single-process'])assert.ok(!args.includes(flag));
     const log=await fs.readFile(path.join(dir,'state/yamu/gamemode-diagnostic.log'),'utf8');
-    assert.ok(log.includes('native-sandbox-marker'));assert.ok(log.includes('native-exit-code=42'));
+    assert.ok(log.includes('native-sandbox-marker'));assert.ok(log.includes('native-exit-code=42'));assert.ok(log.includes('diagnostic-v2-start'));assert.ok(log.includes('gpu-isolation=in-process'));
     for(const secret of ['synthetic-sensitive-value','synthetic-url-value','ABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJ','run-as-node-still-set'])assert.ok(!log.includes(secret));
   }finally{await fs.rm(dir,{recursive:true,force:true});}
 });

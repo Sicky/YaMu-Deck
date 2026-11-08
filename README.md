@@ -2,7 +2,7 @@
 
 [Русский](README.md) · [English](README.en.md)
 
-[Скачать последнюю сборку](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.3)
+[Скачать последнюю сборку](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.4)
 
 **Яндекс Музыка на Steam Deck — с «Моей волной», управлением геймпадом и выбором качества звука.**
 
@@ -23,21 +23,21 @@
 
 ## Статус проекта
 
-Текущая версия — **0.3.3**, ранняя версия в активной разработке. Интерфейс и сценарии плеера проверялись на Windows; тесты API используют имитацию сервиса. Подготовлены Linux-архив и Windows portable; для AppImage настроена сборка в Linux через GitHub Actions.
+Текущая версия — **0.3.4**, ранняя версия в активной разработке. **Пользователь подтвердил успешный запуск в Gaming Mode на Steam Deck OLED** после исправления запуска GPU-процесса. Ранее на этом устройстве подтверждены подключение к Яндекс Музыке и воспроизведение в Desktop Mode. Linux-архив и AppImage собираются в Linux CI; также доступна Windows portable.
 
-**Полная совместимость с физическим Steam Deck пока не подтверждена.** Gaming Mode, хранилище SteamOS и управление через актуальные Steam/Decky требуют проверки на устройстве. Проект не сертифицирован Valve и не связан с Яндексом.
+Проверка запуска на OLED не означает проверку всех функций и всех моделей Deck. Хранилище SteamOS и интеграция Steam/Decky требуют отдельных проверок. Проект не сертифицирован Valve и не связан с Яндексом.
 
 ## Установка
 
 Если Desktop Mode работает, а Gaming Mode вылетает или зависает, см. [режим совместимости и диагностику](docs/gaming-mode-startup.md). Для Steam используйте `start-yamu-gamemode.sh` из новой сборки; обычный `start-yamu.sh` предназначен также для Desktop Mode.
 
-Готовые сборки доступны в [GitHub Releases](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.3). Каталог `dist/` исключён из Git.
+Готовые сборки доступны в [GitHub Releases](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.4). Каталог `dist/` исключён из Git.
 
 | Платформа | Файл |
 |---|---|
-| Steam Deck / Linux x86_64 | `yamu-deck-0.3.3.tar.gz` |
-| Windows x64, portable | `Yamu.0.3.3.exe` |
-| Steam Deck / Linux x86_64, AppImage | `Yamu-0.3.3.AppImage` |
+| Steam Deck / Linux x86_64 | `yamu-deck-0.3.4.tar.gz` |
+| Windows x64, portable | `Yamu.0.3.4.exe` |
+| Steam Deck / Linux x86_64, AppImage | `Yamu-0.3.4.AppImage` |
 
 ### Steam Deck
 
@@ -45,18 +45,18 @@
 2. Откройте терминал в распакованном каталоге, где находится `start-yamu.sh`:
 
    ```sh
-   chmod +x start-yamu.sh
+   chmod +x start-yamu.sh start-yamu-gamemode.sh
    ./start-yamu.sh --fullscreen
    ```
 
 3. Получите код входа в приложении и подтвердите его на `https://oauth.yandex.ru/device` с телефона или в браузере.
-4. Добавьте `start-yamu.sh` в Steam как стороннюю игру. Рабочая папка — каталог скрипта, параметр запуска — `--fullscreen`.
+4. Добавьте `start-yamu-gamemode.sh` в Steam как стороннюю игру. Рабочая папка — каталог скрипта. Для AppImage укажите параметры `--steam-deck --fullscreen`.
 5. Выберите раскладку Steam Input «Геймпад». **Proton не включайте:** используйте Linux-сборку.
 6. Запускайте Yamu из Gaming Mode. Для фонового прослушивания переключитесь в игру через меню Steam, оставив плеер работающим.
 
 ### Windows
 
-Запустите `Yamu.0.3.3.exe`. Установка не требуется. Настройки и защищённая сессия сохраняются в пользовательском профиле Electron. Сборка пока не подписана цифровым сертификатом.
+Запустите `Yamu.0.3.4.exe`. Установка не требуется. Настройки и защищённая сессия сохраняются в пользовательском профиле Electron. Сборка пока не подписана цифровым сертификатом.
 
 ### Быстрые настройки Steam Deck
 

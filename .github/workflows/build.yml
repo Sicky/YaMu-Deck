@@ -14,7 +14,7 @@ jobs:
         run: node scripts/prepare-linux-runtime.cjs
       - run: npm test
       - run: dbus-run-session -- npm run test:mpris
-      - run: sh -n scripts/start-yamu.sh scripts/start-yamu-gamemode.sh
+      - run: sh -n scripts/start-yamu.sh scripts/start-yamu-gamemode.sh scripts/diagnose-yamu-gamemode.sh
       - run: xvfb-run -a npm run test:ui
       - run: xvfb-run -a npm run test:ui -- --steam-deck
       - name: Build AppImage and Linux archive (retry transient downloads)

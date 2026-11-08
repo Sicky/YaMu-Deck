@@ -52,6 +52,9 @@ app.on('web-contents-created',(_event,contents) => {
         return {title:document.title,width:innerWidth,height:innerHeight};
       })()`);
       const win = BrowserWindow.fromWebContents(contents); win.setContentSize(1280,800);
+      const preferences=contents.getLastWebPreferences();
+      if(!preferences.sandbox||!preferences.contextIsolation||preferences.nodeIntegration)throw new Error('Renderer isolation disabled');
+      if(app.commandLine.hasSwitch('in-process-gpu')&&app.getAppMetrics().some(metric=>metric.type==='GPU'))throw new Error('Unexpected separate GPU process');
       await new Promise(resolve=>setTimeout(resolve,200));
       await fs.writeFile(path.join(__dirname,'../docs/preview.png'),(await win.capturePage()).toPNG());
       await contents.executeJavaScript("document.querySelector('#settings').click()");
