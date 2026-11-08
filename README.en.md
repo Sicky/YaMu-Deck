@@ -2,6 +2,8 @@
 
 [English](README.en.md) · [Русский](README.md)
 
+[Download the latest build](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.2)
+
 **Yandex Music on Steam Deck — with My Wave, gamepad controls, and selectable audio quality.**
 
 An unofficial desktop client for SteamOS / Linux x86_64 and Windows. Its minimalist dark interface takes inspiration from the Yandex Music website and fits the Steam Deck's 1280×800 screen. The entire home screen is visible without scrolling.
@@ -29,12 +31,13 @@ The current application interface is in Russian. This file provides English docu
 
 ## Installation
 
-The following files have been prepared for version 0.3.2. They can be attached to GitHub Releases; the `dist/` directory is excluded from Git.
+Builds are available in [GitHub Releases](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.2). The `dist/` directory is excluded from Git.
 
 | Platform | File |
 |---|---|
 | Steam Deck / Linux x86_64 | `yamu-deck-0.3.2.tar.gz` |
-| Windows x64, portable | `Yamu 0.3.2.exe` |
+| Windows x64, portable | `Yamu.0.3.2.exe` |
+| Steam Deck / Linux x86_64, AppImage | `Yamu-0.3.2.AppImage` |
 
 ### Steam Deck
 
@@ -53,7 +56,7 @@ The following files have been prepared for version 0.3.2. They can be attached t
 
 ### Windows
 
-Run `Yamu 0.3.2.exe`. No installation is required. Settings and the encrypted session are stored in the Electron user profile. The build is not currently digitally signed.
+Run `Yamu.0.3.2.exe`. No installation is required. Settings and the encrypted session are stored in the Electron user profile. The build is not currently digitally signed.
 
 ### Steam Deck Quick Access Menu
 
