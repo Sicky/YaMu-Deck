@@ -2,7 +2,7 @@
 
 [English](README.en.md) · [Русский](README.md)
 
-[Download the latest build](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.2)
+[Download the latest build](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.3)
 
 **Yandex Music on Steam Deck — with My Wave, gamepad controls, and selectable audio quality.**
 
@@ -23,7 +23,7 @@ An unofficial desktop client for SteamOS / Linux x86_64 and Windows. Its minimal
 
 ## Project status
 
-The current version is **0.3.2**, an early release under active development. The interface and playback workflows have been tested on Windows; API tests use a simulated service. Linux archives and Windows portable builds have been prepared. A GitHub Actions workflow is configured to build an AppImage on Linux.
+The current version is **0.3.3**, an early release under active development. The interface and playback workflows have been tested on Windows; API tests use a simulated service. Linux archives and Windows portable builds have been prepared. A GitHub Actions workflow is configured to build an AppImage on Linux.
 
 **Full compatibility with a physical Steam Deck has not yet been verified.** Gaming Mode, SteamOS credential storage, and integration with current Steam/Decky versions still require testing on the device. This project is not Valve-certified and is not affiliated with Yandex.
 
@@ -31,13 +31,15 @@ The current application interface is in Russian. This file provides English docu
 
 ## Installation
 
-Builds are available in [GitHub Releases](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.2). The `dist/` directory is excluded from Git.
+If Desktop Mode works but Gaming Mode crashes or hangs, use `start-yamu-gamemode.sh` from the new build as your Steam shortcut target. It enables X11 and software rendering while keeping the Electron sandbox. Credential storage operations are asynchronous and time-limited. See the [compatibility and diagnostics guide](docs/gaming-mode-startup.md) (Russian). Use the regular `start-yamu.sh` for Desktop Mode.
+
+Builds are available in [GitHub Releases](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.3). The `dist/` directory is excluded from Git.
 
 | Platform | File |
 |---|---|
-| Steam Deck / Linux x86_64 | `yamu-deck-0.3.2.tar.gz` |
-| Windows x64, portable | `Yamu.0.3.2.exe` |
-| Steam Deck / Linux x86_64, AppImage | `Yamu-0.3.2.AppImage` |
+| Steam Deck / Linux x86_64 | `yamu-deck-0.3.3.tar.gz` |
+| Windows x64, portable | `Yamu.0.3.3.exe` |
+| Steam Deck / Linux x86_64, AppImage | `Yamu-0.3.3.AppImage` |
 
 ### Steam Deck
 
@@ -56,7 +58,7 @@ Builds are available in [GitHub Releases](https://github.com/Sicky/YaMu-Deck/rel
 
 ### Windows
 
-Run `Yamu.0.3.2.exe`. No installation is required. Settings and the encrypted session are stored in the Electron user profile. The build is not currently digitally signed.
+Run `Yamu.0.3.3.exe`. No installation is required. Settings and the encrypted session are stored in the Electron user profile. The build is not currently digitally signed.
 
 ### Steam Deck Quick Access Menu
 

@@ -2,7 +2,7 @@ name: Build Linux AppImage
 on: [push, workflow_dispatch]
 jobs:
   appimage:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -12,10 +12,14 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: dbus-run-session -- npm run test:mpris
+      - run: sh -n scripts/start-yamu.sh scripts/start-yamu-gamemode.sh
+      - run: xvfb-run -a npm run test:ui
       - run: npm run dist:linux
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
       - uses: actions/upload-artifact@v4
         with:
           name: Yamu-SteamDeck-x86_64
-          path: dist/*.AppImage
+          path: |
+            dist/*.AppImage
+            dist/*.tar.gz

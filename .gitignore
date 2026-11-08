@@ -6,5 +6,6 @@ dist/
 .env.*
 !.env.example
 session.enc
+session-v2.enc
 *.pem
 *.key

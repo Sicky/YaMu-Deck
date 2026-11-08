@@ -2,7 +2,7 @@
 
 [Русский](README.md) · [English](README.en.md)
 
-[Скачать последнюю сборку](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.2)
+[Скачать последнюю сборку](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.3)
 
 **Яндекс Музыка на Steam Deck — с «Моей волной», управлением геймпадом и выбором качества звука.**
 
@@ -23,19 +23,21 @@
 
 ## Статус проекта
 
-Текущая версия — **0.3.2**, ранняя версия в активной разработке. Интерфейс и сценарии плеера проверялись на Windows; тесты API используют имитацию сервиса. Подготовлены Linux-архив и Windows portable; для AppImage настроена сборка в Linux через GitHub Actions.
+Текущая версия — **0.3.3**, ранняя версия в активной разработке. Интерфейс и сценарии плеера проверялись на Windows; тесты API используют имитацию сервиса. Подготовлены Linux-архив и Windows portable; для AppImage настроена сборка в Linux через GitHub Actions.
 
 **Полная совместимость с физическим Steam Deck пока не подтверждена.** Gaming Mode, хранилище SteamOS и управление через актуальные Steam/Decky требуют проверки на устройстве. Проект не сертифицирован Valve и не связан с Яндексом.
 
 ## Установка
 
-Готовые сборки доступны в [GitHub Releases](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.2). Каталог `dist/` исключён из Git.
+Если Desktop Mode работает, а Gaming Mode вылетает или зависает, см. [режим совместимости и диагностику](docs/gaming-mode-startup.md). Для Steam используйте `start-yamu-gamemode.sh` из новой сборки; обычный `start-yamu.sh` предназначен также для Desktop Mode.
+
+Готовые сборки доступны в [GitHub Releases](https://github.com/Sicky/YaMu-Deck/releases/tag/v0.3.3). Каталог `dist/` исключён из Git.
 
 | Платформа | Файл |
 |---|---|
-| Steam Deck / Linux x86_64 | `yamu-deck-0.3.2.tar.gz` |
-| Windows x64, portable | `Yamu.0.3.2.exe` |
-| Steam Deck / Linux x86_64, AppImage | `Yamu-0.3.2.AppImage` |
+| Steam Deck / Linux x86_64 | `yamu-deck-0.3.3.tar.gz` |
+| Windows x64, portable | `Yamu.0.3.3.exe` |
+| Steam Deck / Linux x86_64, AppImage | `Yamu-0.3.3.AppImage` |
 
 ### Steam Deck
 
@@ -54,7 +56,7 @@
 
 ### Windows
 
-Запустите `Yamu.0.3.2.exe`. Установка не требуется. Настройки и защищённая сессия сохраняются в пользовательском профиле Electron. Сборка пока не подписана цифровым сертификатом.
+Запустите `Yamu.0.3.3.exe`. Установка не требуется. Настройки и защищённая сессия сохраняются в пользовательском профиле Electron. Сборка пока не подписана цифровым сертификатом.
 
 ### Быстрые настройки Steam Deck
 
