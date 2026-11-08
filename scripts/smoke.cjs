@@ -61,7 +61,9 @@ app.on('web-contents-created',(_event,contents) => {
       await fs.writeFile(path.join(__dirname,'../docs/quality-preview.png'),(await win.capturePage()).toPNG());
       if(errors.length) throw new Error(errors.join('\n'));
       await fs.writeFile(path.join(__dirname,'../.tools/smoke-result.json'),JSON.stringify({passed:true,...result}));
-      console.log('UI SMOKE PASS',JSON.stringify(result)); app.exit(0);
+      // Exercise normal window/GPU cleanup; app.exit() tears down an in-process
+      // GPU abruptly and can SIGTRAP after a successful Linux UI check.
+      console.log('UI SMOKE PASS',JSON.stringify(result)); app.quit();
     } catch(e) {await fs.writeFile(path.join(__dirname,'../.tools/smoke-result.json'),JSON.stringify({passed:false,error:e.message}));console.error(e);app.exit(1);}
   });
 });
