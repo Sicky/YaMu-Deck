@@ -44,13 +44,21 @@ trap 'printf "launcher-signal\n" >> "$yamu_log"; exit 143' HUP INT TERM
 # Scrub in memory before any process output is written to disk. This does not
 # enable verbose Chromium logging or collect the environment/command line.
 awk '
+  function scrub_long(s, out, part) {
+    out = ""
+    while (match(s, /[[:alnum:]_.~-]+/)) {
+      part = substr(s, RSTART, RLENGTH)
+      out = out substr(s, 1, RSTART - 1) (length(part) >= 24 ? "[long value redacted]" : part)
+      s = substr(s, RSTART + RLENGTH)
+    }
+    return out s
+  }
   {
     if (tolower($0) ~ /(authorization|cookie|oauth|access.token|refresh.token|password|secret)/) {
       print "native: [sensitive message redacted]"; fflush(); next
     }
     gsub(/https?:[^[:space:]]+/, "[url redacted]")
-    gsub(/[[:alnum:]_.~-]{24,}/, "[long value redacted]")
-    print "native: " substr($0, 1, 600); fflush()
+    print "native: " substr(scrub_long($0), 1, 600); fflush()
   }
 ' < "$yamu_fifo" >> "$yamu_log" &
 yamu_filter=$!
