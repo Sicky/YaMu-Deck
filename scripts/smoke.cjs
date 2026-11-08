@@ -1,0 +1,66 @@
+const {app, BrowserWindow} = require('electron');
+const fs = require('node:fs/promises');
+const path = require('node:path');
+app.setPath('userData', path.join(__dirname,'../.tools/smoke-profile'));
+let errors = [];
+app.on('web-contents-created',(_event,contents) => {
+  contents.setBackgroundThrottling(false);
+  contents.on('console-message',(_event,level,message) => { if (level === 3) errors.push(message); });
+  contents.once('did-finish-load',async () => {
+    try {
+      const result = await contents.executeJavaScript(`(async () => {
+        const assert = (v,m) => {if(!v) throw new Error(m)};
+        assert(document.querySelector('h1').textContent === 'В своём ритме.', 'home');
+        assert(typeof window.require === 'undefined','node isolation');
+        assert((await window.yamu.session()).ok, 'IPC');
+        document.querySelector('[data-page="library"]').click();
+        assert(document.querySelector('#empty-login'),'signed-out library');
+        const previousScreen = document.querySelector('#empty-login');
+        document.querySelector('#queue').click();
+        assert(document.querySelector('h1').textContent === 'Сейчас в очереди', 'queue opens');
+        assert(document.querySelector('#queue').getAttribute('aria-pressed') === 'true', 'queue active');
+        document.querySelector('#queue').click();
+        assert(document.querySelector('#empty-login') === previousScreen, 'previous screen restored');
+        assert(document.querySelector('#queue').getAttribute('aria-pressed') === 'false', 'queue inactive');
+        document.querySelector('#queue').click();
+        document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
+        assert(document.querySelector('#empty-login') === previousScreen, 'Escape closes queue');
+        document.querySelector('#empty-login').click();
+        assert(document.querySelector('#auth').open,'auth modal');
+        document.querySelector('#token').value = 'synthetic-test-token';
+        const closed = new Promise(resolve => document.querySelector('#auth').addEventListener('close',resolve,{once:true}));
+        document.querySelector('#auth-close').click();
+        await closed;
+        assert(document.querySelector('#token').value === '', 'token cleared on close');
+        document.querySelector('#settings').click();
+        assert(document.querySelector('#preferences').open,'settings');
+        document.querySelector('[data-quality="lossless"]').click();
+        assert(document.querySelector('[data-quality="lossless"]').getAttribute('aria-pressed') === 'true', 'lossless selected');
+        assert(localStorage.getItem('quality') === 'lossless','quality saved');
+        document.querySelector('[data-quality="hq"]').click();
+        assert(document.querySelector('[data-quality="hq"]').getAttribute('aria-pressed') === 'true','high selected');
+        document.querySelector('#settings-close').click();
+        document.querySelector('#wave-nav').click();
+        assert(document.querySelector('#auth').open,'wave requires login');
+        const waveClosed = new Promise(resolve => document.querySelector('#auth').addEventListener('close',resolve,{once:true}));
+        document.querySelector('#auth-close').click(); await waveClosed;
+        document.querySelector('[data-page="home"]').click();
+        document.querySelector('[data-page="home"]').focus();
+        document.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true}));
+        assert(document.activeElement.tagName === 'BUTTON','keyboard focus');
+        assert(document.documentElement.scrollWidth <= innerWidth,'horizontal overflow');
+        return {title:document.title,width:innerWidth,height:innerHeight};
+      })()`);
+      const win = BrowserWindow.fromWebContents(contents); win.setContentSize(1280,800);
+      await new Promise(resolve=>setTimeout(resolve,200));
+      await fs.writeFile(path.join(__dirname,'../docs/preview.png'),(await win.capturePage()).toPNG());
+      await contents.executeJavaScript("document.querySelector('#settings').click()");
+      await fs.writeFile(path.join(__dirname,'../docs/quality-preview.png'),(await win.capturePage()).toPNG());
+      if(errors.length) throw new Error(errors.join('\n'));
+      await fs.writeFile(path.join(__dirname,'../.tools/smoke-result.json'),JSON.stringify({passed:true,...result}));
+      console.log('UI SMOKE PASS',JSON.stringify(result)); app.exit(0);
+    } catch(e) {await fs.writeFile(path.join(__dirname,'../.tools/smoke-result.json'),JSON.stringify({passed:false,error:e.message}));console.error(e);app.exit(1);}
+  });
+});
+require('../electron/main.cjs');
+setTimeout(async()=>{await fs.writeFile(path.join(__dirname,'../.tools/smoke-result.json'),JSON.stringify({passed:false,error:'Smoke timeout'}));app.exit(1);},20000);

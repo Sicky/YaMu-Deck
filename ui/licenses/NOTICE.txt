@@ -1,0 +1,2 @@
+Google Material Icons Rounded — https://github.com/google/material-design-icons
+Copyright Google LLC. Licensed under Apache License 2.0. SVGs adapted with accessibility and currentColor attributes.
